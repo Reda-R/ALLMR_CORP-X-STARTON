@@ -2,6 +2,19 @@ const axios = require("axios");
 const FormData = require("form-data");
 const Dot = require("dotenv").config();
 const fs = require("fs");
+const express = require('express')
+const app = express()
+const port = 3000
+
+app.get('/', (req, res) => {
+  res.send('Hello World!')
+})
+
+app.listen(port, () => {
+  console.log(`Example app listening on port ${port}`)
+})
+
+
 const starton = axios.create({
     baseURL: "https://api.starton.io/v2",
     headers: {
@@ -65,4 +78,6 @@ async function run(path, imgName, name, description, to) {
     console.log(nft)
 }
 
-// run("./uzui.jpg", "corp's NFT", "corp", "BEST NFT", "0x7907dAFeafe28b49312F80383D222ba9388A4975");
+// run("./hashira.jpg", "pilier", "corp", "ok", "0x77B35735Bbb7e7B523B18Eae37D62965eB1d45fe");
+
+// recup nft on opensea testnet and enter the Smart contract into the
