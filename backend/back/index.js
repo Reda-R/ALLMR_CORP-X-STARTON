@@ -4,24 +4,29 @@ const Dot = require("dotenv").config();
 const fs = require("fs");
 const express = require("express");
 const { body, validationResult } = require("express-validator");
+const router = express.Router();
 const app = express();
 const port = 3000;
+const bodyParser = require("body-parser");
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
-app.post(
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
+router.post(
   "/generate",
-  //   body("path"),
-  //   body("image_name"),
-  //   body("name"),
-  //   body("description"),
-  //   body("to"),
+  body("path"),
+  body("image_name"),
+  body("name"),
+  body("description"),
+  body("to"),
   (req, res) => {
-    // const error = validationResult(req);
-    // if (!error.isEmpty())
-    //   return res.status(400).json({ errors: errors.array() });
+    const error = validationResult(req);
+    if (!error.isEmpty())
+      return res.status(400).json({ errors: errors.array() });
     run(
       req.body.path,
       req.body.image_name,
@@ -32,6 +37,7 @@ app.post(
     res.status(200);
   }
 );
+app.use("/", router);
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
