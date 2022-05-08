@@ -6,7 +6,9 @@
             <UserEventForm @saveEvent="saveEvent"/>
             <br/>
 <!--            <pre> {{events}} </pre> -->
-            <UserEvent v-for="(event, index) in events" :key="index" :event="event"/>
+            <div class="col-12">
+                <UserEvent v-for="(event, index) in events" :key="index" :event="event"/>
+            </div>
         </div>
 <!--          {{events}}-->
      <!--    </v-col> -->

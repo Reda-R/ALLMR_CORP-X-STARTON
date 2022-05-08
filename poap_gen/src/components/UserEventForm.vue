@@ -9,6 +9,8 @@
         <v-btn
           color="primary"
           dark
+          large
+          class="text-transform-lower col-10"
           v-bind="attrs"
           v-on="on">
         Ajouter un evenement
@@ -16,7 +18,7 @@
       </template>
       <v-card>
         <v-card-title>
-          <span class="text-h5">User Profile</span>
+          <span class="text-h5">Paramètres de l'événement</span>
         </v-card-title>
         <v-card-text>
           <v-container>
@@ -66,11 +68,9 @@ export default {
   data: () => ({
     dialog: false,
       model : {
-        name: '',   model : {
         name: '',
         url: null,
         image: null
-      }
       }
   }),
   methods: {
@@ -86,8 +86,10 @@ export default {
       console.log('url =', this.model.url)
     },
     async saveEvent() {
-        this.$emit('saveEvent',Object.assign({}, this.model))
-        this.closeForm()
+        if (this.model.name && this.model.image != null) {
+            this.$emit('saveEvent',Object.assign({}, this.model))
+            this.closeForm()
+        }
     }
   }
 }
