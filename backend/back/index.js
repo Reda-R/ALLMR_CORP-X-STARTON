@@ -9,7 +9,7 @@ const app = express();
 const port = 3000;
 const bodyParser = require("body-parser");
 const cors = require("cors");
-
+const formidable = require("express-formidable")
 app.options("/generate", cors());
 
 router.use(cors());
@@ -23,16 +23,9 @@ app.use(bodyParser.json());
 
 router.post(
   "/generate",
-  body("img"),
-  body("image_name"),
-  body("name"),
-  body("description"),
-  body("to"),
   (req, res) => {
-    const error = validationResult(req);
-    if (!error.isEmpty())
-      return res.status(400).json({ errors: error.array() });
-    run(
+    console.log(req.body)
+       run(
       req.body.img,
       req.body.image_name,
       req.body.name,
@@ -101,15 +94,12 @@ async function mintNft(receiverAddress, metadataCid) {
 }
 
 async function run(img, imgName, name, description, to) {
-  const imgBuffer = img;
+    const imgBuffer = img;
   const ipfsImg = await uploadImageOnIpfs(imgBuffer, imgName);
-  console.log(ipfsImg);
   const ipfsMetadata = await uploadMetadataOnIpfs(
     ipfsImg.pinStatus.pin.cid,
     name,
     description
   );
-  console.log(ipfsMetadata);
   const nft = await mintNft(to, ipfsMetadata.pinStatus.pin.cid);
-  console.log(nft);
 }
