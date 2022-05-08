@@ -10,6 +10,8 @@ const port = 3000;
 const bodyParser = require("body-parser");
 const cors = require("cors");
 
+app.options("/generate", cors());
+
 router.use(cors());
 
 app.get("/", (req, res) => {
