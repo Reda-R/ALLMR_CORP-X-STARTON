@@ -30,7 +30,6 @@ Si l'utilisateur ne possède pas ubuntu :
   - cd poap_gen/
   - npm install
   - sudo npm run serve
-4) aller dans le dossier "poap_gen"
 
 ## Équipe et commentaires
 *Précisez le nom de votre équipe (le même que sur le discord), et dites-nous ce que vous avez appris durant ce hackathon !*
