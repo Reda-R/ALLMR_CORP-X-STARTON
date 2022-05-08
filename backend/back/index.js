@@ -8,6 +8,9 @@ const router = express.Router();
 const app = express();
 const port = 3000;
 const bodyParser = require("body-parser");
+const cors = require("cors");
+
+app.use(cors());
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
@@ -18,7 +21,7 @@ app.use(bodyParser.json());
 
 router.post(
   "/generate",
-  body("path"),
+  body("img"),
   body("image_name"),
   body("name"),
   body("description"),
@@ -28,7 +31,7 @@ router.post(
     if (!error.isEmpty())
       return res.status(400).json({ errors: errors.array() });
     run(
-      req.body.path,
+      req.body.img,
       req.body.image_name,
       req.body.name,
       req.body.description,
@@ -49,10 +52,6 @@ const starton = axios.create({
     "x-api-key": process.env.STARTON_API_KEY,
   },
 });
-
-function createBufferFile(path) {
-  return fs.readFileSync(path);
-}
 
 // The image variable should be a buffer
 async function uploadImageOnIpfs(image, name) {
@@ -99,8 +98,8 @@ async function mintNft(receiverAddress, metadataCid) {
   return nft.data;
 }
 
-async function run(path, imgName, name, description, to) {
-  const imgBuffer = createBufferFile(path);
+async function run(img, imgName, name, description, to) {
+  const imgBuffer = img;
   const ipfsImg = await uploadImageOnIpfs(imgBuffer, imgName);
   console.log(ipfsImg);
   const ipfsMetadata = await uploadMetadataOnIpfs(
@@ -112,7 +111,3 @@ async function run(path, imgName, name, description, to) {
   const nft = await mintNft(to, ipfsMetadata.pinStatus.pin.cid);
   console.log(nft);
 }
-
-// run("./hashira.jpg", "pilier", "corp", "ok", "0x77B35735Bbb7e7B523B18Eae37D62965eB1d45fe");
-
-// recup nft on opensea testnet and enter the Smart contract into the
