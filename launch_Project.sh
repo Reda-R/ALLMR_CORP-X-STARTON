@@ -84,4 +84,6 @@ color_box_green "Launching Project.."
 sleep 1
 cd poap_gen/
 sleep 1
+npm install
+sleep 1
 npm run serve
