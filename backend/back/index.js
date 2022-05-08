@@ -10,7 +10,7 @@ const port = 3000;
 const bodyParser = require("body-parser");
 const cors = require("cors");
 
-app.use(cors());
+router.use(cors());
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
@@ -29,7 +29,7 @@ router.post(
   (req, res) => {
     const error = validationResult(req);
     if (!error.isEmpty())
-      return res.status(400).json({ errors: errors.array() });
+      return res.status(400).json({ errors: error.array() });
     run(
       req.body.img,
       req.body.image_name,
