@@ -29,7 +29,20 @@ export default {
   }, methods : {
       sendPoap() {
           console.log("sendPoap", "clicked")
-        axios.post('http://localhost:8080/', this.event)
+          const formData = new FormData()
+          formData.append("file", this.event.image)
+          formData.append("image_name", this.event.name)
+          formData.append("name", this.event.name)
+          formData.append("description", "description")
+          formData.append("to", "0x614ACFfC68508d8F0C01Bd235Ee8ae622F8E2558")
+          formData.append("isSync", true)
+
+        console.log(this.event)
+        axios.post('http://localhost:3000/generate', formData, {
+              headers : {
+                  'Content-Type': 'multipart/form-data'
+              },
+        })
             .then(() => {
                 console.log("sendPoap", "response")
                 this.isActive = true
